@@ -1,3 +1,4 @@
 neonize
 mysql-connector-python
 python-dotenv
+pyarmor

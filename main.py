@@ -5,6 +5,7 @@ from neonize.events import MessageEv, ConnectedEv, LoggedOutEv, event
 from neonize.utils import build_jid
 from dotenv import load_dotenv
 
+from security import validar_licencia, integrity_check
 from database.connection import DatabaseManager
 from database.models import Usuario
 from flows.router import Sesion, procesar_mensaje, obtener_telefono
@@ -119,6 +120,13 @@ def inicializar_base_datos():
 
 def main():
     print("🤖 Iniciando Bot de WhatsApp...")
+    
+    print("🔐 Verificando licencia...")
+    validar_licencia()
+    
+    print("🔒 Verificando integridad del código...")
+    integrity_check()
+    
     inicializar_base_datos()
     
     print("📱 Conectando al servidor de WhatsApp...")
