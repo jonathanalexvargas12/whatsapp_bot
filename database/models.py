@@ -81,3 +81,53 @@ class Usuario:
         finally:
             cursor.close()
             conn.close()
+
+class MensajeProcesado:
+    @staticmethod
+    def crear_tabla():
+        conn = DatabaseManager.get_connection()
+        cursor = conn.cursor()
+        try:
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS mensajes_procesados (
+                    mensaje_id VARCHAR(100) PRIMARY KEY,
+                    numero_telefono VARCHAR(20),
+                    procesado_el TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            conn.commit()
+            print("✅ Tabla 'mensajes_procesados' creada o ya existe.")
+        except mysql.connector.Error as err:
+            print(f"❌ Error al crear tabla mensajes_procesados: {err}")
+        finally:
+            cursor.close()
+            conn.close()
+
+    @staticmethod
+    def ya_procesado(mensaje_id):
+        conn = DatabaseManager.get_connection()
+        cursor = conn.cursor()
+        try:
+            cursor.execute("SELECT 1 FROM mensajes_procesados WHERE mensaje_id = %s", (mensaje_id,))
+            return cursor.fetchone() is not None
+        except mysql.connector.Error as err:
+            return False
+        finally:
+            cursor.close()
+            conn.close()
+
+    @staticmethod
+    def marcar_procesado(mensaje_id, numero_telefono):
+        conn = DatabaseManager.get_connection()
+        cursor = conn.cursor()
+        try:
+            cursor.execute("""
+                INSERT IGNORE INTO mensajes_procesados (mensaje_id, numero_telefono)
+                VALUES (%s, %s)
+            """, (mensaje_id, numero_telefono))
+            conn.commit()
+        except mysql.connector.Error as err:
+            print(f"❌ Error al marcar mensaje: {err}")
+        finally:
+            cursor.close()
+            conn.close()

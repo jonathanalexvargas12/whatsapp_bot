@@ -1,5 +1,6 @@
 import os
 import logging
+import time
 from neonize.client import NewClient
 from neonize.events import MessageEv, ConnectedEv, LoggedOutEv, event
 from neonize.utils import build_jid
@@ -7,7 +8,7 @@ from dotenv import load_dotenv
 
 from security import validar_licencia, integrity_check
 from database.connection import DatabaseManager
-from database.models import Usuario
+from database.models import Usuario, MensajeProcesado
 from flows.router import Sesion, procesar_mensaje, obtener_telefono
 from flows.steps import BIENVENIDA_MSG
 
@@ -17,10 +18,13 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 client = NewClient(name="whatsapp_bot")
+conexion_timestamp = None
 
 @client.event(ConnectedEv)
 def on_connected(client: NewClient, event: ConnectedEv):
-    print(f"✅ Conectado a WhatsApp")
+    global conexion_timestamp
+    conexion_timestamp = time.time()
+    print(f"✅ Conectado a WhatsApp (inicio de sincronizacion: {conexion_timestamp})")
 
 @client.event(LoggedOutEv)
 def on_logged_out(client: NewClient, event: LoggedOutEv):
@@ -63,6 +67,57 @@ def on_message(client: NewClient, event: MessageEv):
     try:
         logger.debug(f"Evento recibido: {event}")
         
+        mensaje_id = None
+        is_group = False
+        is_broadcast = False
+        is_status = False
+        chat_server = ""
+        
+        if hasattr(event, 'Info') and hasattr(event.Info, 'MessageSource'):
+            msg_source = event.Info.MessageSource
+            if hasattr(msg_source, 'ID') and msg_source.ID:
+                mensaje_id = str(msg_source.ID)
+            if hasattr(msg_source, 'IsGroup') and msg_source.IsGroup:
+                is_group = True
+            if hasattr(msg_source, 'IsBroadcast') and msg_source.IsBroadcast:
+                is_broadcast = True
+            if hasattr(msg_source, 'Chat') and hasattr(msg_source.Chat, 'Server'):
+                chat_server = msg_source.Chat.Server
+                if chat_server == "broadcast":
+                    is_status = True
+        
+        print(f"==> Mensaje info - ID: {mensaje_id}, IsGroup: {is_group}, IsBroadcast: {is_broadcast}, Server: {chat_server}")
+        
+        if is_group or is_broadcast or is_status:
+            print(f"==> Mensaje de grupo/broadcast/status, ignorando")
+            return
+        
+        # Ignorar mensajes multimedia (imágenes, videos, audio, stickers, documentos)
+        if hasattr(event.Message, 'imageMessage') or \
+           hasattr(event.Message, 'videoMessage') or \
+           hasattr(event.Message, 'audioMessage') or \
+           hasattr(event.Message, 'stickerMessage') or \
+           hasattr(event.Message, 'documentMessage') or \
+           hasattr(event.Message, 'voiceMessage'):
+            print("==> Mensaje multimedia detectado, ignorando")
+            return
+        
+        # Ignorar mensajes que llegan muy rapido despues de conectar (sincronizacion)
+        if conexion_timestamp:
+            tiempo_desde_conexion = time.time() - conexion_timestamp
+            if tiempo_desde_conexion < 30:
+                print(f"==> Mensaje durante sincronizacion ({tiempo_desde_conexion:.1f}s), ignorando")
+                return
+        
+        if mensaje_id and MensajeProcesado.ya_procesado(mensaje_id):
+            print(f"==> Mensaje ya procesado, ignorando: {mensaje_id}")
+            return
+        
+        # Marcar mensaje como procesado inmediatamente al recibirlo (con telefono conocido)
+        telefono = obtener_telefono(event)
+        if mensaje_id:
+            MensajeProcesado.marcar_procesado(mensaje_id, telefono)
+        
         mensaje = None
         if hasattr(event.Message, 'conversation') and event.Message.conversation:
             mensaje = event.Message.conversation
@@ -76,7 +131,6 @@ def on_message(client: NewClient, event: MessageEv):
             return
         
         mensaje = str(mensaje)
-        telefono = obtener_telefono(event)
         print(f"==> Mensaje de: {telefono}: {mensaje}")
         
         respuesta = procesar_mensaje(telefono, mensaje)
@@ -87,7 +141,6 @@ def on_message(client: NewClient, event: MessageEv):
             print(f"--- chat_jid: {chat_jid} ---")
             
             if chat_jid:
-                # Si es solo un número, construir el JID correctamente
                 if '@' not in str(chat_jid):
                     numero = str(chat_jid)
                 else:
@@ -95,7 +148,6 @@ def on_message(client: NewClient, event: MessageEv):
                 
                 print(f"==> Enviando a numero: {numero}")
                 
-                # Usar build_jid solo con el número
                 jid_para_enviar = build_jid(numero)
                 print(f"==> JID formateado: {jid_para_enviar}")
                 
@@ -116,6 +168,7 @@ def inicializar_base_datos():
     DatabaseManager.get_pool()
     Sesion.crear_tabla()
     Usuario.crear_tabla()
+    MensajeProcesado.crear_tabla()
     print("✅ Base de datos lista.")
 
 def main():

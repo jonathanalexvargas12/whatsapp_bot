@@ -2,7 +2,7 @@ import json
 import logging
 from database.connection import DatabaseManager
 from database.models import Usuario
-from flows.steps import Estado, get_mensaje_estado, validar_dato, obtener_siguiente_estado, obtener_nacionalidad, BIENVENIDA_MSG
+from flows.steps import Estado, get_mensaje_estado, validar_dato, obtener_siguiente_estado, obtener_nacionalidad, BIENVENIDA_MSG, RECORDATORIO
 
 logger = logging.getLogger(__name__)
 
@@ -113,7 +113,7 @@ def procesar_mensaje(telefono, mensaje):
     mensaje_lower = mensaje.lower()
     print(f"[procesar_mensaje] telefono={telefono}, mensaje={mensaje}")
     
-    if mensaje_lower == "/reiniciar":
+    if mensaje_lower == "nuevamente":
         Sesion.eliminar(telefono)
         from database.models import Usuario as UsuarioModel
         conn = DatabaseManager.get_connection()
@@ -126,7 +126,7 @@ def procesar_mensaje(telefono, mensaje):
         finally:
             cursor.close()
             conn.close()
-        return "Encuesta reiniciada. Escribe 'encuesta' para comenzar."
+        return "Encuesta reiniciada. Escribe 'encuesta' para comenzar." + RECORDATORIO
     
     estado_actual, contexto = Sesion.obtener_estado(telefono)
     print(f"[procesar_mensaje] estado_actual={estado_actual}, contexto={contexto}")
@@ -134,21 +134,21 @@ def procesar_mensaje(telefono, mensaje):
     usuario_existe = Usuario.existe(telefono)
     print(f"[procesar_mensaje] usuario_existe={usuario_existe}")
     
-    # SIEMPRE permitir /repetir para reiniciar la encuesta
-    if mensaje_lower == "/repetir":
+    # SIEMPRE permitir repetir para reiniciar la encuesta
+    if mensaje_lower == "repetir":
         Sesion.guardar_estado(telefono, Estado.NACIONALIDAD, {})
-        return "Bienvenido a nuestro servicio de atención al cliente. Por favor, complete la encuesta:\n\n¿Define su nacionalidad?\n1. Venezolano\n2. Extranjero"
+        return "Bienvenido a nuestro servicio de atención al cliente. Por favor, complete la encuesta:\n\n¿Define su nacionalidad?\n1. Venezolano\n2. Extranjero" + RECORDATORIO
     
     # Si está en INICIO (sin sesión activa)
     if estado_actual == Estado.INICIO:
-        if mensaje_lower == "encuesta":
+        if mensaje_lower.strip() == "encuesta":
             Sesion.guardar_estado(telefono, Estado.NACIONALIDAD, {})
-            return "Bienvenido a nuestro servicio de atención al cliente. Por favor, complete la encuesta:\n\n¿Define su nacionalidad?\n1. Venezolano\n2. Extranjero"
-        return "¡Hola! 👋 Escribe 'encuesta' para comenzar la encuesta."
+            return "Bienvenido a nuestro servicio de atención al cliente. Por favor, complete la encuesta:\n\n¿Define su nacionalidad?\n1. Venezolano\n2. Extranjero" + RECORDATORIO
+        return "¡Hola! 👋 Escribe 'encuesta' para comenzar la encuesta." + RECORDATORIO
     
     # Si ya completó la encuesta (estado COMPLETADO)
     if estado_actual == Estado.COMPLETADO:
-        return "Ya has completado la encuesta. Usa /repetir para volver a empezar o /reiniciar para empezar de nuevo."
+        return "Ya has completado la encuesta. Usa 'repetir' para volver a empezar o 'nuevamente' para empezar de nuevo."
     
     # Validar y procesar la respuesta según el estado actual
     if not validar_dato(estado_actual, mensaje):

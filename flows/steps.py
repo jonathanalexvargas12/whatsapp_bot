@@ -9,14 +9,16 @@ class Estado(Enum):
     DIRECCION = "DIRECCION"
     COMPLETADO = "COMPLETADO"
 
+RECORDATORIO = "\n\n📌 Escribe 'nuevamente' en cualquier momento para empezar desde cero."
+
 MENSAJES = {
-    Estado.INICIO: "Bienvenido a nuestro servicio de atención al cliente. Por favor, complete la encuesta:\n\n¿Define su nacionalidad?\n1. Venezolano\n2. Extranjero",
-    Estado.NACIONALIDAD: "¿Define su nacionalidad?\n1. Venezolano\n2. Extranjero",
-    Estado.NOMBRE: "Escriba su nombre:",
-    Estado.APELLIDO: "Escriba su apellido:",
-    Estado.EDAD: "¿Cuál es su edad? (solo números)",
-    Estado.DIRECCION: "Ingrese su dirección:",
-    Estado.COMPLETADO: "Gracias por responder la encuesta! 🎉\n\nSi deseas repetir la encuesta, escribe /repetir\nPara reiniciar, escribe /reiniciar"
+    Estado.INICIO: "Bienvenido a nuestro servicio de atención al cliente. Por favor, complete la encuesta:\n\n¿Define su nacionalidad?\n1. Venezolano\n2. Extranjero" + RECORDATORIO,
+    Estado.NACIONALIDAD: "¿Define su nacionalidad?\n1. Venezolano\n2. Extranjero" + RECORDATORIO,
+    Estado.NOMBRE: "Escriba su nombre:" + RECORDATORIO,
+    Estado.APELLIDO: "Escriba su apellido:" + RECORDATORIO,
+    Estado.EDAD: "¿Cuál es su edad? (solo números)" + RECORDATORIO,
+    Estado.DIRECCION: "Ingrese su dirección:" + RECORDATORIO,
+    Estado.COMPLETADO: "Gracias por responder la encuesta! 🎉\n\nSi deseas repetir la encuesta, escribe 'repetir'\nPara reiniciar completamente, escribe 'nuevamente'"
 }
 
 BIENVENIDA_MSG = """¡Bienvenido! 👋

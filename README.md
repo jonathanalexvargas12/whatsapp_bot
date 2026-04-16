@@ -8,7 +8,7 @@ Un bot de WhatsApp automatizado con flujo conversacional basado en una máquina 
 - **Máquina de Estados Finitos (FSM)** para manejar el flujo conversacional
 - **Persistencia en MariaDB** para almacenar sesiones y datos de usuarios
 - **Encuesta automatizada** que captura: nacionalidad, nombre, apellido, edad y dirección
-- **Comandos de control**: `/repetir` y `/reiniciar`
+- **Comandos de control**: `repetir` y `nuevamente`
 
 ## 🛠️ Tecnologías
 
@@ -91,8 +91,8 @@ El bot mostrará un código QR que debes escanear con tu WhatsApp para vincular 
 ### Comandos
 
 - `encuesta` - Iniciar la encuesta
-- `/repetir` - Reiniciar la encuesta sin borrar datos
-- `/reiniciar` - Reiniciar completamente (borra sesión y datos)
+- `repetir` - Reiniciar la encuesta sin borrar datos
+- `nuevamente` - Reiniciar completamente (borra sesión y datos)
 
 ## 📊 Base de Datos
 
