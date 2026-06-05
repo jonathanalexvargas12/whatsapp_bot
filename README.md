@@ -39,6 +39,7 @@ whatsapp_bot/
 ├── .env                  # Configuración de base de datos
 ├── main.py               # Punto de entrada
 └── requirements.txt      # Dependencias
+└── whatsapp_bot          # Almacena la sesion de whatsapp (el dispositivo de donde se conecta)
 ```
 
 ## 🚀 Instalación
