@@ -38,7 +38,7 @@ whatsapp_bot/
 ├── security.py           # Validación de integridad del proyecto
 ├── .env                  # Configuración de base de datos
 ├── main.py               # Punto de entrada
-└── requirements.txt      # Dependencias
+├── requirements.txt      # Dependencias
 └── whatsapp_bot          # Almacena la sesion de whatsapp (el dispositivo de donde se conecta)
 ```
 
