@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🤖 Bot de WhatsApp 
 
 **Creador:** Ingeniero Jonathan Alexander Vargas
@@ -9,26 +8,15 @@
 Bot de WhatsApp automatizado con flujo conversacional basado en una máquina de estados finitos (FSM). Persiste reportes en MariaDB y permite a proveedores enviar reportes periódicos (diarios, semanales, etc.) de forma sencilla.
 
 ---
-=======
-# 🤖 Bot de WhatsApp - Automatizado
-
-Un bot de WhatsApp automatizado con flujo conversacional basado en una máquina de estados finitos (FSM) y persistencia de datos en MariaDB.
->>>>>>> 3ea514dd5db3340e63003e713ee6a3f78f3ceec6
 
 ## 📋 Características
 
 - **Conexión a WhatsApp** mediante Neonize (wrapper de Python para whatsmeow en Go)
 - **Máquina de Estados Finitos (FSM)** para manejar el flujo conversacional
-<<<<<<< HEAD
 - **Persistencia en MariaDB** con dos tablas: `sesiones` (estado transitorio) e `historial` (reportes completados)
 - **Reportes periódicos**: cada envío se guarda como un registro independiente, sin sobrescribir anteriores
 - **Demora realista** entre respuestas para evitar detección de spam
 - **Creación automática** de la base de datos al iniciar si no existe
-=======
-- **Persistencia en MariaDB** para almacenar sesiones y datos de usuarios
-- **Encuesta automatizada** que captura: nacionalidad, nombre, apellido, edad y dirección
-- **Comandos de control**: `/repetir` y `/reiniciar`
->>>>>>> 3ea514dd5db3340e63003e713ee6a3f78f3ceec6
 
 ## 🛠️ Tecnologías
 
@@ -41,7 +29,6 @@ Un bot de WhatsApp automatizado con flujo conversacional basado en una máquina 
 
 ```
 whatsapp_bot/
-<<<<<<< HEAD
 ├── credentials/           # Almacena la sesión de WhatsApp
 ├── database/
 │   ├── connection.py     # Pool de conexiones a MariaDB
@@ -51,16 +38,6 @@ whatsapp_bot/
 │   └── steps.py          # Definición de estados y pasos
 ├── security.py           # Validación de integridad del proyecto
 ├── .env                  # Configuración de base de datos
-=======
-├── credentials/           # Almacena el archivo .db de la sesión
-├── database/
-│   ├── connection.py     # Pool de conexiones a MariaDB
-│   └── models.py         # Modelos de datos (Usuario)
-├── flows/
-│   ├── router.py         # Lógica de enrutamiento FSM
-│   └── steps.py          # Definición de estados y pasos
-├── .env                  # Variables de entorno
->>>>>>> 3ea514dd5db3340e63003e713ee6a3f78f3ceec6
 ├── main.py               # Punto de entrada
 └── requirements.txt      # Dependencias
 ```
@@ -91,20 +68,14 @@ whatsapp_bot/
    ```env
    DB_HOST=localhost
    DB_PORT=3306
-<<<<<<< HEAD
    DB_NAME=wa_bot_db
    DB_USER=tu_usuario
    DB_PASS=tu_password
-=======
-   DB_NAME=whatsapp_bot
-   DB_USER=root
-   DB_PASSWORD=tu_password
    ```
 
 5. **Inicia MariaDB y crea la base de datos:**
    ```bash
    mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS whatsapp_bot;"
->>>>>>> 3ea514dd5db3340e63003e713ee6a3f78f3ceec6
    ```
 
 ## ▶️ Uso
@@ -116,7 +87,6 @@ python main.py
 
 El bot mostrará un código QR que debes escanear con tu WhatsApp para vincular el dispositivo.
 
-<<<<<<< HEAD
 Si la base de datos no existe, el bot la crea automáticamente al iniciar usando las credenciales del `.env`.
 
 ---
@@ -221,63 +191,3 @@ EULA — Uso libre pero no distribución. El incumplimiento puede conllevar carg
 
 **Creador:** Ingeniero Jonathan Alexander Vargas
 **Contacto:** contactoconexiatech@gmail.com
-=======
-### Flujo de la Encuesta
-
-1. El usuario escribe `encuesta` para comenzar
-2. Responde: Nacionalidad (1: Venezolano, 2: Extranjero)
-3. Ingresa: Nombre
-4. Ingresa: Apellido
-5. Ingresa: Edad (solo números)
-6. Ingresa: Dirección
-7. Al completar, los datos se guardan en la base de datos
-
-### Comandos
-
-- `encuesta` - Iniciar la encuesta
-- `/repetir` - Reiniciar la encuesta sin borrar datos
-- `/reiniciar` - Reiniciar completamente (borra sesión y datos)
-
-## 📊 Base de Datos
-
-### Tabla: `usuarios`
-Almacena los datos de los usuarios que completan la encuesta.
-
-| Campo | Tipo | Descripción |
-|-------|------|-------------|
-| numero_telefono | VARCHAR(20) | Clave primaria |
-| nacionalidad | VARCHAR(20) | Venezolano/Extranjero |
-| nombre | VARCHAR(100) | Nombre del usuario |
-| apellido | VARCHAR(100) | Apellido del usuario |
-| edad | INT | Edad del usuario |
-| direccion | VARCHAR(255) | Dirección del usuario |
-| encuesta_completada | BOOLEAN | Estado de la encuesta |
-| creado_el | TIMESTAMP | Fecha de creación |
-| actualizado_el | TIMESTAMP | Última actualización |
-
-### Tabla: `sesiones`
-Almacena el estado actual de cada conversación.
-
-| Campo | Tipo | Descripción |
-|-------|------|-------------|
-| numero_telefono | VARCHAR(20) | Clave primaria |
-| estado_actual | VARCHAR(50) | Estado FSM actual |
-| datos_contexto | JSON | Datos recopilados |
-| actualizado_el | TIMESTAMP | Última actualización |
-
-## 🐛 Solución de Problemas
-
-Si el bot no responde:
-1. Verifica que MariaDB esté corriendo
-2. Revisa que el archivo `.env` esté configurado correctamente
-3. Asegúrate de haber escaneado el código QR
-4. Verifica los logs en la consola
-
-## 📝 Licencia
-
-Este proyecto es de uso EULA (presto para su uso libre pero no su distribucion, de no cumplir dicha regla, puede enfrentarse a cargos legales).
-
----
-
-**Creador:** Jonathan Alexander Vargas
->>>>>>> 3ea514dd5db3340e63003e713ee6a3f78f3ceec6
