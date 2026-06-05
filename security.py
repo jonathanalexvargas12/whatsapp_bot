@@ -146,14 +146,16 @@ def verificar(password=None):
 # ===================================================================
 
 def reparar():
-    clave = input("🔐 Ingresa la clave de reparación (antídoto): ")
+    clave = input("🔐 Ingresa tu contraseña maestra (antídoto): ")
     if hashlib.sha256(clave.encode()).hexdigest() != _ANTIDOTE_HASH:
-        print("❌ Clave de reparación incorrecta.")
+        print("❌ Contraseña incorrecta.")
         return False
 
-    print("\n✅ Clave de reparación verificada. Procediendo a regenerar la credencial...\n")
-    generar()
-    print("🔓 El sistema ha sido reparado. Ya podés iniciar el bot normalmente.\n")
+    print("\n✅ Contraseña verificada. Regenerando credencial...\n")
+    if os.path.exists(ARCHIVO):
+        os.remove(ARCHIVO)
+    generar(clave)
+    print("🔓 Sistema reparado. Ya podés iniciar el bot normalmente.\n")
     return True
 
 # ===================================================================
