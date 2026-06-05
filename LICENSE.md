@@ -65,6 +65,26 @@ Este acuerdo se rige por las leyes de la **República Bolivariana de Venezuela**
 
 Es la ley principal que protege las obras intelectuales. Reconoce al software como obra literaria protegida (Artículo 2) y otorga al titular derechos **morales** (irrenunciables e intransferibles: paternidad, integridad de la obra) y derechos **patrimoniales** (reproducción, distribución, comunicación pública, transformación). Esta ley es la base que permite al titular restringir la distribución no autorizada del software.
 
+### 9.2. Tratados internacionales aplicables
+
+Dado que el software puede ser accedido desde cualquier país, este acuerdo se respalda además en los siguientes tratados internacionales suscritos por Venezuela:
+
+**Convenio de Berna para la Protección de las Obras Literarias y Artísticas (1886, ratificado por Venezuela en 1982).**
+
+Es el tratado fundamental del derecho de autor a nivel mundial con más de 180 países miembros. Establece:
+- **Protección automática:** la obra está protegida desde el momento de su creación, sin necesidad de registro ni formalidades (Artículo 5.2).
+- **Trato nacional:** cada país miembro debe proteger la obra como si fuera de un autor nacional suyo (Artículo 5.1).
+- **Derechos mínimos:** todos los miembros deben reconocer al autor los derechos de reproducción, distribución, comunicación pública y transformación.
+
+**Acuerdo sobre los Aspectos de los Derechos de Propiedad Intelectual relacionados con el Comercio (ADPIC/TRIPS, 1994, OMC).**
+
+Venezuela es miembro de la OMC. Este acuerdo:
+- Reconoce los programas de ordenador como obras literarias protegidas por derecho de autor (Artículo 10.1).
+- Exige a todos los miembros cumplir con el Convenio de Berna (Artículo 9.1).
+- Establece mecanismos de observancia y solución de controversias entre estados.
+
+**Efecto práctico:** si una persona o empresa en cualquier país miembro (EE.UU., España, Colombia, etc.) distribuye este software sin autorización, el titular puede ejercer acciones legales en dichos países bajo la legislación local, gracias a estos tratados. La protección no se limita al territorio venezolano.
+
 ### 9.3. Código Civil de Venezuela (Gaceta Oficial N.° 2.990 Extraordinario, 1982)
 
 Regula las obligaciones y contratos (Artículos 1.133 al 1.185). Provee el marco jurídico para que este EULA sea considerado un contrato válido y exigible entre las partes, estableciendo las bases de responsabilidad civil en caso de incumplimiento.
