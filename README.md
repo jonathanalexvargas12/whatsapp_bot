@@ -29,7 +29,6 @@ Bot de WhatsApp automatizado con flujo conversacional basado en una máquina de 
 
 ```
 whatsapp_bot/
-├── credentials/           # Almacena la sesión de WhatsApp
 ├── database/
 │   ├── connection.py     # Pool de conexiones a MariaDB
 │   └── models.py         # Modelos: Historial (reportes completados)
@@ -39,7 +38,8 @@ whatsapp_bot/
 ├── security.py           # Validación de integridad del proyecto
 ├── .env                  # Configuración de base de datos
 ├── main.py               # Punto de entrada
-└── requirements.txt      # Dependencias
+├── requirements.txt      # Dependencias
+└── whatsapp_bot          # Almacena la sesion de whatsapp (el dispositivo de donde se conecta)
 ```
 
 ## 🚀 Instalación
