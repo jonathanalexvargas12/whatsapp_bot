@@ -18,7 +18,7 @@ _ANTITAMPER_SALT = b"wa_bot_antitamper_2024"
 #    python -c "import hashlib; print(hashlib.sha256(b'tu_frase_secreta').hexdigest())"
 # 3. Copiá el resultado entre las comillas abajo (reemplazando el valor actual).
 # ===================================================================
-_ANTIDOTE_HASH = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+_ANTIDOTE_HASH = "acf6f8807c18cac53af39e77f3cccbaf4a68de64960fef50fb160ef846b12387"
 
 # ===================================================================
 # FUNCIONES INTERNAS
