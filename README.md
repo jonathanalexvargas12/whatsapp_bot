@@ -185,7 +185,7 @@ Si un usuario deja la encuesta a mitad y no interactúa durante más de **30 min
 
 ## 📝 Licencia
 
-EULA — Uso libre pero no distribución. El incumplimiento puede conllevar cargos legales.
+Este proyecto está sujeto a los términos del [Acuerdo de Licencia de Usuario Final (EULA)](LICENSE.md). Uso libre pero no distribución. El incumplimiento puede conllevar cargos legales.
 
 ---
 
