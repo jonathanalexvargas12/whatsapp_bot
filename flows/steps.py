@@ -12,14 +12,27 @@ class Estado(Enum):
 
 MENSAJES = {
     Estado.INICIO: "📋 *Encuesta de Registro*\n\nPara comenzar, escribe:\n\n👉 _encuesta_",
-    Estado.NOMBRE_APELLIDO: "✏️ *Paso 1 de 6*\n\n📖 Lea cuidadosamente cada pregunta antes de responder.\n\nEscribe tu *nombre* y *apellido* completos:\n\n📌 _repetir_ → Reinicia la encuesta actual\n📌 _encuesta_ → Realice una nueva encuesta desde cero",
-    Estado.CEDULA: "🆔 *Paso 2 de 6*\n\nEscribe tu número de _cédula_ *(solo números)*:\n\n📌 _repetir_ → Reinicia la encuesta actual\n📌 _encuesta_ → Realice una nueva encuesta desde cero",
-    Estado.COMUNA: "📍 *Paso 3 de 6*\n\nEscribe tu *comuna*:\n\n📌 _repetir_ → Reinicia la encuesta actual\n📌 _encuesta_ → Realice una nueva encuesta desde cero",
-    Estado.PARROQUIA: "📍 *Paso 4 de 6*\n\nEscribe tu *parroquia*:\n\n📌 _repetir_ → Reinicia la encuesta actual\n📌 _encuesta_ → Realice una nueva encuesta desde cero",
-    Estado.CORREO: "📧 *Paso 5 de 6*\n\nEscribe tu *correo electrónico*:\n\n📌 _repetir_ → Reinicia la encuesta actual\n📌 _encuesta_ → Realice una nueva encuesta desde cero",
-    Estado.TELEFONO: "📞 *Paso 6 de 6*\n\nEscribe tu *número de teléfono*:\n\n📌 _repetir_ → Reinicia la encuesta actual\n📌 _encuesta_ → Realice una nueva encuesta desde cero",
+    Estado.NOMBRE_APELLIDO: "✏️ *Paso 1 de 6*\n\nEscribe tu *nombre* y *apellido* completos:",
+    Estado.CEDULA: "🆔 *Paso 2 de 6*\n\nEscribe tu número de _cédula_ *(solo números)*:",
+    Estado.COMUNA: "📍 *Paso 3 de 6*\n\nEscribe tu *comuna*:",
+    Estado.PARROQUIA: "📍 *Paso 4 de 6*\n\nEscribe tu *parroquia*:",
+    Estado.CORREO: "📧 *Paso 5 de 6*\n\nEscribe tu *correo electrónico*:",
+    Estado.TELEFONO: "📞 *Paso 6 de 6*\n\nEscribe tu *número de teléfono*:",
     Estado.COMPLETADO: "✅ *¡Encuesta completada!* 🎉\n\nGracias por tus datos, ya quedaron registrados.\n\n📌 _Comandos disponibles:_\n• *repetir* — Reinicia la encuesta actual\n• *encuesta* — Realice una nueva encuesta desde cero"
 }
+
+INSTRUCCIONES_MSG = """👋 *Observatorio para el Desarrollo Económico de Caracas*
+
+Estás ingresando al chatbot del *Observatorio para el Desarrollo Económico de Caracas*.
+
+📌 *¿Qué es?*
+La presente encuesta tiene el fin de proporcionar información sobre el desarrollo económico en el *Municipio Libertador de Caracas*.
+
+Le solicitamos los siguientes datos:
+
+📋 *Comandos disponibles:*
+• _encuesta_ → Inicia una nueva encuesta
+• _repetir_ → Reinicia la encuesta actual"""
 
 def get_mensaje_estado(estado):
     return MENSAJES.get(estado, "")
