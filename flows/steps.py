@@ -21,12 +21,6 @@ MENSAJES = {
     Estado.COMPLETADO: "✅ *¡Encuesta completada!* 🎉\n\nGracias por tus datos, ya quedaron registrados.\n\n📌 _Comandos disponibles:_\n• *repetir* — Reinicia la encuesta actual\n• *encuesta* — Realice una nueva encuesta desde cero"
 }
 
-BIENVENIDA_MSG = """👋 *¡Bienvenido!*
-
-Gracias por contactarnos. Estamos para ayudarte.
-
-📋 Escribe _encuesta_ para comenzar un nuevo reporte."""
-
 def get_mensaje_estado(estado):
     return MENSAJES.get(estado, "")
 
